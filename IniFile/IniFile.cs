@@ -125,6 +125,30 @@ namespace IniFile
                 _properties.Add(name, new IniProperty { Name = name, Value = value, Comment = comment });
             else
             {
+                _properties[name].Value = value;
+                if (comment != null)
+                    _properties[name].Comment = comment;
+            }
+        }
+
+        /// <summary>
+        /// Append a property value.
+        /// </summary>
+        /// <param name="name">Name of the property.</param>
+        /// <param name="value">Value of the property.</param>
+        /// <param name="comment">A comment to display above the property.</param>
+        public void Append(string name, string value, string comment = null)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                RemoveProperty(name);
+                return;
+            }
+
+            if (!_properties.ContainsKey(name))
+                _properties.Add(name, new IniProperty { Name = name, Value = value, Comment = comment });
+            else
+            {
                 if (_allowDuplicate && _properties[name].Value != null)
                 {
                     if (_properties[name].Values == null)
@@ -248,7 +272,7 @@ namespace IniFile
                     if (keyValue.Length != 2)
                         continue;
 
-                    section.Set(keyValue[0].Trim(), keyValue[1].Trim());
+                    section.Append(keyValue[0].Trim(), keyValue[1].Trim());
                 }
             }
         }

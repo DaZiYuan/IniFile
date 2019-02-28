@@ -122,7 +122,7 @@ rofl = copter
             var iniFile = new IniFile(true);
             iniFile.Section("Foo").Comment = "This is foo";
             iniFile.Section("Foo").Set("bar", "1");
-            iniFile.Section("Foo").Set("bar", "2");
+            iniFile.Section("Foo").Append("bar", "2");
             iniFile.Section("Foo").Set("baz", "qux", comment: "bazy baz");
             iniFile.Save(tempFilename);
 
